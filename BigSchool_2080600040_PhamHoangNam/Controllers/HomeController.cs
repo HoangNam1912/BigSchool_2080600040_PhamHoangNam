@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using BigSchool_2080600040_PhamHoangNam.Models;
+using BigSchool_2080600040_PhamHoangNam.ViewModels;
 
 namespace BigSchool_2080600040_PhamHoangNam.Controllers
 {        
@@ -21,8 +22,13 @@ namespace BigSchool_2080600040_PhamHoangNam.Controllers
             .Include(c => c.Lecturer)
             .Include(c => c.Category)
             .Where(c=>c.DateTime > DateTime.Now);
+            var viewModel = new CoursesViewModel
+            {
+                UpcomingCourses = upcomingCourses,
+                ShowAction = User.Identity.IsAuthenticated
+            };
             
-            return View(upcomingCourses);
+            return View(viewModel);
         }
 
         public ActionResult About()
